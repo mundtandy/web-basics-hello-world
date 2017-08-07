@@ -8,13 +8,20 @@ $(function() {
   // console.log will log a message or object to the browser developer console
   console.log("page loaded...");
 
-  $("selector-goes-here").click(/* function for when the button is clicked goes here */);
-  /*
-   * TODO: You will need to use a css selector to get jQuery to find the button element in the page
-   * Then you will need to make a new javascript function to do stuff for when the button
-   * is clicked and pass it into the click function above...
-   */
+  // note that selecting on just 'button' will bind the displayAChuckNorrisJoke function to every button element on the page...
+  $("button").click(displayAChuckNorrisJoke);
 });
+
+function displayAChuckNorrisJoke() {
+  $("#results-area").text('loading...');
+
+  // in js you can pass functions around, so we define one and pass it to the
+  // the fetchRandomWord function
+  fetchRandomChuckNorrisJoke(function(word) {
+    // this function will be called by fetchRandomChuckNorrisJoke when the random joke has been retrieved
+    $("#results-area").text("Your random Chuck Norris joke is: \"" + word + "\"");
+  });
+}
 
 // Gets a random chuck norris joke from an API, then passes it to the callback function
 function fetchRandomChuckNorrisJoke(callback) {
